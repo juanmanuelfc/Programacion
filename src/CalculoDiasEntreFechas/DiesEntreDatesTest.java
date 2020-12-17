@@ -7,13 +7,14 @@ Descripcion:
 
 public class DiesEntreDatesTest {
     public static void main(String[] args) {
-        int ano1 = 2022;
-        ano1++;
-        int ano2 = 2025;
-        ano2--;
-        int dias = (ano2 - ano1) * 365;
-
-        System.out.println(dias);
-
+        try {
+            DiesEntreDates_JuanManuel_Fernandez d1 = new DiesEntreDates_JuanManuel_Fernandez();
+            DataXS fechaInicial = new DataXS("15/06/1998");
+            DataXS fechaDestino = new DataXS("25/08/2025");
+            System.out.println("Han pasado " + d1.nombreDiesTotals(fechaInicial, fechaDestino) + " dias.");
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }

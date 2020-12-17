@@ -13,6 +13,7 @@ public class DiesEntreDates_JuanManuel_Fernandez extends CalcularDiesEntreDates 
     int diesResteAnyInicial;
     int diesResteAnyDesti;
     int diesNumAnysComplets;
+    boolean anyDeTraspas;
 
     @Override
     protected int diesMes(int mes) {
@@ -32,7 +33,7 @@ public class DiesEntreDates_JuanManuel_Fernandez extends CalcularDiesEntreDates 
 
     @Override
     protected int diesMesInicial(DataXS dataXS) {
-        this.diesMesInicial = this.diesMes - dataXS.dia;
+        this.diesMesInicial = diesMes(dataXS.mes) - dataXS.dia;
         return this.diesMesInicial;
     }
 
@@ -64,19 +65,32 @@ public class DiesEntreDates_JuanManuel_Fernandez extends CalcularDiesEntreDates 
 
     @Override
     protected int diesNumAnysComplets(DataXS datainicial, DataXS datadesti) {
-        datainicial.any++;
-        datadesti.any--;
-        this.diesNumAnysComplets = ((datadesti.any - datainicial.any) + 1) * 365;
+        this.diesNumAnysComplets = ((datadesti.any - datainicial.any) -1) * 365;
         return this.diesNumAnysComplets;
     }
 
     @Override
     protected int numDiesPerAnysdeTraspas(DataXS datainicial, DataXS datadesti) {
-        return 0;
+        int diaBisiesto = 0;
+        for (int i = 0; i <= ((datadesti.any - datainicial.any) -1); i++) {
+            if (anyDeTraspas(datainicial.any + i)){
+                diaBisiesto++;
+            }
+        }
+        if (anyDeTraspas(datadesti.any)){
+            diaBisiesto++;
+        }
+        return diaBisiesto;
     }
 
     @Override
     protected boolean anyDeTraspas(int any) {
-        return false;
+        if (any % 400 == 0 || ((any % 4 == 0) && !(any % 100 == 0))){
+            this.anyDeTraspas = true;
+        }
+        else {
+            this.anyDeTraspas = false;
+        }
+        return this.anyDeTraspas;
     }
 }
