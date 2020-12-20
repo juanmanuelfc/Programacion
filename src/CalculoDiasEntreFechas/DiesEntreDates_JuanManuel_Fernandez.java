@@ -72,13 +72,26 @@ public class DiesEntreDates_JuanManuel_Fernandez extends CalcularDiesEntreDates 
     @Override
     protected int numDiesPerAnysdeTraspas(DataXS datainicial, DataXS datadesti) {
         int diaBisiesto = 0;
-        for (int i = 0; i <= ((datadesti.any - datainicial.any) -1); i++) {
-            if (anyDeTraspas(datainicial.any + i)){
+        if (datainicial.mes <= 02 && anyDeTraspas(datainicial.mes)){
+            diaBisiesto++;
+            for (int i = 0; i <= ((datadesti.any - datainicial.any) -1); i++) {
+                if (anyDeTraspas(datainicial.any + i)){
+                    diaBisiesto++;
+                }
+            }
+            if (anyDeTraspas(datadesti.any)){
                 diaBisiesto++;
             }
         }
-        if (anyDeTraspas(datadesti.any)){
-            diaBisiesto++;
+        else {
+            for (int i = 0; i <= ((datadesti.any - datainicial.any) -1); i++) {
+                if (anyDeTraspas(datainicial.any + i)){
+                    diaBisiesto++;
+                }
+            }
+            if (anyDeTraspas(datadesti.any)){
+                diaBisiesto++;
+            }
         }
         return diaBisiesto;
     }
